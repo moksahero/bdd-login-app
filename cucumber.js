@@ -5,6 +5,6 @@ module.exports = {
     format: ["progress"],
     paths: ["tests/features/**/*.feature"],
     publishQuiet: true,
-    timeout: 60000
-  }
+    timeout: 10000
+  },
 };
