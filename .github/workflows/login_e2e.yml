@@ -22,26 +22,18 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Install dependencies (root)
-        run: npm install
-
-      - name: Install frontend dependencies
-        working-directory: ./frontend
-        run: npm install
-
-      - name: Install backend dependencies
-        working-directory: ./backend
-        run: npm install
-
       - name: Install Playwright dependencies
         run: npx playwright install --with-deps
 
       - name: Start server, run test, and kill
         run: |
           # Start frontend (Next.js) in background
+          npm install
           cd frontend
+          npm install
           npm run dev &
           cd ../backend
+          npm install
           npm run &
           cd ../
           npx wait-on http://localhost:3000/login
