@@ -36,17 +36,6 @@ jobs:
       - name: Install Playwright dependencies
         run: npx playwright install --with-deps
 
-      - name: Start backend
-        working-directory: ./backend
-        run: npm run start &
-
-      - name: Start frontend
-        working-directory: ./frontend
-        run: npm run dev &
-
-      - name: Wait for frontend
-        run: npx wait-on http://localhost:3000/login
-
       - name: Install dev tools
         run: npm install --save-dev start-server-and-test concurrently
 
