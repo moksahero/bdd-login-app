@@ -27,30 +27,18 @@ jobs:
 
       - name: Install frontend dependencies
         working-directory: ./frontend
-        run: npm install
+        run: npm install && npm run dev &
 
       - name: Install backend dependencies
         working-directory: ./backend
-        run: npm install
+        run: npm install && npm run start &
 
       - name: Install Playwright dependencies
         run: npx playwright install --with-deps
 
-      - name: Start server, run test, and kill
+      - name: un tests
         run: |
-          # Start frontend (Next.js) in background
-          cd frontend
-          npm run dev > /dev/null 2>&1 &
-
-          # Start backend (Express) in background
-          cd ../backend
-          npm run start > /dev/null 2>&1 &
-
-          # Go back to root and wait for frontend to be ready
-          cd ../
           npx wait-on http://localhost:3000/login
-
           # Run cucumber tests
           npx cucumber-js
-
           echo "All done."
