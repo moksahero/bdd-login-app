@@ -1,14 +1,6 @@
-import {
-  setDefaultTimeout,
-  Given,
-  When,
-  Then,
-  AfterAll,
-} from "@cucumber/cucumber";
+import { Given, When, Then, AfterAll } from "@cucumber/cucumber";
 import { Browser, expect } from "@playwright/test";
 import { chromium, Page } from "playwright";
-
-setDefaultTimeout(10 * 1000); // 10 seconds
 
 let page: Page;
 let browser: Browser;
