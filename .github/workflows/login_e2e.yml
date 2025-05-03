@@ -38,26 +38,12 @@ jobs:
 
       - name: Start server, run test, and kill
         run: |
-          set -e
-          trap 'echo "Cleaning up..."; kill -9 $FRONTEND_PID $BACKEND_PID || true' EXIT
-
           # Start frontend (Next.js) in background
           cd frontend
-          npm run dev > /dev/null 2>&1 &
-          FRONTEND_PID=$!
-          echo "Started frontend with PID $FRONTEND_PID"
-
-          # Start backend (Express) in background
+          npm run dev &
           cd ../backend
-          npm run start > /dev/null 2>&1 &
-          BACKEND_PID=$!
-          echo "Started backend with PID $BACKEND_PID"
-
-          # Go back to root and wait for frontend to be ready
+          npm run &
           cd ../
           npx wait-on http://localhost:3000/login
-
-          # Run cucumber tests
           npx cucumber-js
-
           echo "All done."
