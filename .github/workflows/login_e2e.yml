@@ -2,6 +2,12 @@ name: Run E2E Tests Manually
 
 on:
   workflow_dispatch:  # ← これが手動実行を可能にする
+  push:               # ← コードがpushされたとき（任意でブランチ指定可）
+    branches:
+      - main
+  pull_request:       # ← PRが作成・更新されたとき
+    branches:
+      - main
 
 jobs:
   e2e:
