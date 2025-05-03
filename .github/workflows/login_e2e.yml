@@ -36,16 +36,13 @@ jobs:
       - name: Install Playwright dependencies
         run: npx playwright install --with-deps
 
-      - name: Start backend
-        working-directory: ./backend
-        run: npm run start &
-
-      - name: Start frontend
-        working-directory: ./frontend
-        run: npm run dev &
-
-      - name: Wait for frontend
-        run: npx wait-on http://localhost:3000/login
-
-      - name: Run Cucumber tests
-        run: npx cucumber-js && pkill -f node
+      - name: Start server, run test, and kill
+        run: |
+          cd frontend
+          npm run dev &
+          cd ../backend
+          npm run start &
+          SERVER_PID=$!
+          npx wait-on http://localhost:4000
+          npx cucumber-js
+          kill $SERVER_PID
