@@ -47,5 +47,8 @@ jobs:
       - name: Wait for frontend
         run: npx wait-on http://localhost:3000/login
 
-      - name: Run Cucumber tests
-        run: npx cucumber-js
+      - name: Install dev tools
+        run: npm install --save-dev start-server-and-test concurrently
+
+      - name: Run servers and tests
+        run: npm run test:e2e
