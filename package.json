@@ -5,13 +5,15 @@
     "test": "cucumber-js",
     "start:all": "concurrently -k \"npm run --prefix frontend dev\" \"npm run --prefix backend start\"",
     "run:cucumber": "npx cucumber-js",
-    "test:e2e": "start-server-and-test --timeout 30000 --silent start:all http://localhost:3000/login run:cucumber"
+    "test:e2e": "start-server-and-test start:all http://localhost:3000/login run:cucumber"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^8.0.0",
     "@playwright/test": "^1.52.0",
     "@types/cors": "^2.8.17",
+    "concurrently": "^9.1.2",
     "playwright": "^1.0.0",
+    "start-server-and-test": "^2.0.11",
     "ts-node": "^10.0.0",
     "typescript": "^4.0.0"
   }
