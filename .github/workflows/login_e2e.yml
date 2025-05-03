@@ -38,6 +38,9 @@ jobs:
 
       - name: Start server, run test, and kill
         run: |
+          set -e
+          trap 'echo "Cleaning up..."; kill -9 $FRONTEND_PID $BACKEND_PID || true' EXIT
+
           # Start frontend (Next.js) in background
           cd frontend
           npm run dev > /dev/null 2>&1 &
@@ -57,7 +60,4 @@ jobs:
           # Run cucumber tests
           npx cucumber-js
 
-          # Kill servers
-          echo "Killing frontend (PID $FRONTEND_PID) and backend (PID $BACKEND_PID)"
-          kill -9 $FRONTEND_PID || echo "Frontend already stopped"
-          kill -9 $BACKEND_PID || echo "Backend already stopped"
+          echo "All done."
