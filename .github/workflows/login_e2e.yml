@@ -1,11 +1,11 @@
 name: Run E2E Tests Manually
 
 on:
-  workflow_dispatch:  # ← これが手動実行を可能にする
-  push:               # ← コードがpushされたとき（任意でブランチ指定可）
+  workflow_dispatch: # ← これが手動実行を可能にする
+  push: # ← コードがpushされたとき（任意でブランチ指定可）
     branches:
       - main
-  pull_request:       # ← PRが作成・更新されたとき
+  pull_request: # ← PRが作成・更新されたとき
     branches:
       - main
 
@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install dependencies (root)
         run: npm install
@@ -36,19 +36,28 @@ jobs:
       - name: Install Playwright dependencies
         run: npx playwright install --with-deps
 
-      - name: Start backend
-        working-directory: ./backend
-        run: npm run start &
+      - name: Start server, run test, and kill
+        run: |
+          set -e
+          trap 'echo "Cleaning up..."; kill -9 $FRONTEND_PID $BACKEND_PID || true' EXIT
 
-      - name: Start frontend
-        working-directory: ./frontend
-        run: npm run dev &
+          # Start frontend (Next.js) in background
+          cd frontend
+          npm run dev > /dev/null 2>&1 &
+          FRONTEND_PID=$!
+          echo "Started frontend with PID $FRONTEND_PID"
 
-      - name: Wait for frontend
-        run: npx wait-on http://localhost:3000/login
+          # Start backend (Express) in background
+          cd ../backend
+          npm run start > /dev/null 2>&1 &
+          BACKEND_PID=$!
+          echo "Started backend with PID $BACKEND_PID"
 
-      - name: Install dev tools
-        run: npm install --save-dev start-server-and-test concurrently
+          # Go back to root and wait for frontend to be ready
+          cd ../
+          npx wait-on http://localhost:3000/login
 
-      - name: Run servers and tests
-        run: npm run test:e2e
+          # Run cucumber tests
+          npx cucumber-js
+
+          echo "All done."
