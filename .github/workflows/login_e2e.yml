@@ -58,6 +58,6 @@ jobs:
           npx wait-on http://localhost:3000/login
 
           # Run cucumber tests
-          npx cucumber-js > /dev/null 2>&1 &
+          npx cucumber-js
 
           echo "All done."
