@@ -1,8 +1,6 @@
-import { setDefaultTimeout, Given, When, Then } from "@cucumber/cucumber";
+import { Given, When, Then, AfterAll } from "@cucumber/cucumber";
 import { Browser, expect } from "@playwright/test";
 import { chromium, Page } from "playwright";
-
-setDefaultTimeout(10 * 1000); // 10 seconds
 
 let page: Page;
 let browser: Browser;
@@ -26,5 +24,12 @@ Then("「ようこそ」というメッセージが表示される", async () =>
   await page.waitForSelector("h1");
   const content = await page.textContent("h1");
   expect(content).toContain("ようこそ");
-  await browser.close();
+});
+
+// ✅ AfterAll フックで明示的にブラウザを閉じる
+AfterAll(async () => {
+  if (browser) {
+    await browser.close();
+    console.log("✅ ブラウザを閉じました");
+  }
 });
