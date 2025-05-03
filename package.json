@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "test": "cucumber-js",
-    "start:all": "concurrently \"npm run --prefix frontend dev\" \"npm run --prefix backend start\"",
-    "test:e2e": "start-server-and-test start:all http://localhost:3000/login 'npx cucumber-js'"
+    "start:all": "concurrently -k \"npm run --prefix frontend dev\" \"npm run --prefix backend start\"",
+    "test:e2e": "start-server-and-test --timeout 30000 --silent start:all http://localhost:3000/login 'npx cucumber-js'"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^8.0.0",
