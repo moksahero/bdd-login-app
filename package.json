@@ -4,7 +4,8 @@
   "scripts": {
     "test": "cucumber-js",
     "start:all": "concurrently -k \"npm run --prefix frontend dev\" \"npm run --prefix backend start\"",
-    "test:e2e": "start-server-and-test --timeout 30000 --silent start:all http://localhost:3000/login 'npx cucumber-js'"
+    "run:cucumber": "npx cucumber-js",
+    "test:e2e": "start-server-and-test --timeout 30000 --silent start:all http://localhost:3000/login run:cucumber"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^8.0.0",
