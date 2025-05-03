@@ -5,7 +5,8 @@
     "test": "cucumber-js",
     "start:all": "concurrently -k \"npm run --prefix frontend dev\" \"npm run --prefix backend start\"",
     "run:cucumber": "npx cucumber-js",
-    "test:e2e": "start-server-and-test start:all http://localhost:3000/login run:cucumber"
+    "test:e2e": "start-server-and-test start:all http://localhost:3000/login run:cucumber",
+    "test:e2e:manual": "npm run --prefix backend start & npm run --prefix frontend dev & npx wait-on http://localhost:3000/login && npx cucumber-js && pkill -f node"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^8.0.0",
