@@ -36,7 +36,7 @@ jobs:
       - name: Install Playwright dependencies
         run: npx playwright install --with-deps
 
-      - name: un tests
+      - name: Run tests
         run: |
           npx wait-on http://localhost:3000/login
           npx cucumber-js
