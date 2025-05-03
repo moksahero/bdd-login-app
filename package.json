@@ -2,13 +2,17 @@
   "name": "login-app",
   "version": "1.0.0",
   "scripts": {
-    "test": "cucumber-js"
+    "test": "cucumber-js",
+    "start:all": "concurrently \"npm run --prefix frontend dev\" \"npm run --prefix backend start\"",
+    "test:e2e": "start-server-and-test start:all http://localhost:3000/login 'npx cucumber-js'"
+
   },
   "devDependencies": {
     "@cucumber/cucumber": "^8.0.0",
     "@playwright/test": "^1.52.0",
     "@types/cors": "^2.8.17",
     "playwright": "^1.0.0",
+    "start-server-and-test": "^2.0.11",
     "ts-node": "^10.0.0",
     "typescript": "^4.0.0"
   }
