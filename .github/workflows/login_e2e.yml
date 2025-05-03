@@ -25,11 +25,11 @@ jobs:
       - name: Install dependencies in root directory
         run: npm install && npx playwright install --with-deps
 
-      - name: Install frontend dependencies
+      - name: Install frontend dependencies and run
         working-directory: ./frontend
         run: npm install && npm run dev &
 
-      - name: Install backend dependencies
+      - name: Install backend dependencies and run
         working-directory: ./backend
         run: npm install && npm run start &
 
