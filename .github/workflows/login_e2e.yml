@@ -40,10 +40,12 @@ jobs:
         run: |
           cd frontend
           npm run dev &
+          FRONTEND_PID=$!
           cd ../backend
           npm run start &
-          SERVER_PID=$!
+          BACKEND_PID=$!
           cd ../
           npx wait-on http://localhost:3000/login
           npx cucumber-js
-          kill $SERVER_PID
+          kill $FRONTEND_PID
+          kill $BACKEND_PID
