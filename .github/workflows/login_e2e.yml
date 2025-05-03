@@ -43,5 +43,7 @@ jobs:
           cd ../backend
           npm run start &
           SERVER_PID=$!
+          cd ../
+          npx wait-on http://localhost:3000/login
           npx cucumber-js
           kill $SERVER_PID
