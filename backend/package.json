@@ -1,0 +1,16 @@
+{
+  "name": "backend",
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "cors": "latest",
+    "express": "latest"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "ts-node": "latest",
+    "typescript": "latest"
+  }
+}
