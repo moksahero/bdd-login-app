@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
-  if (email === "test@example.com" && password === "password123") {
+  if (email === "test@example.com" && password === "password123456") {
     res.status(200).send({ message: "Login successful" });
   } else {
     res.status(401).send({ message: "Unauthorized" });
