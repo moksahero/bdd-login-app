@@ -14,26 +14,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout code # ← コードのチェックアウト
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Setup Node.js #← NodeJSのインストール
         uses: actions/setup-node@v3
         with:
           node-version: "18"
 
       - name: Install dependencies in root directory
+        #⇑ CucumberとPlaywrightなどのコードのインストール
         run: npm install && npx playwright install --with-deps
 
       - name: Install frontend dependencies and run
+        #⇑ Next.jsのfrontendのコードのインストールと実行
         working-directory: ./frontend
         run: npm install && npm run dev &
 
       - name: Install backend dependencies and run
+        #⇑ Expressのbackendのコードのインストールと実行
         working-directory: ./backend
         run: npm install && npm run start &
 
       - name: Run tests
+        #⇑ Frontendが立ち上がるのを待って、Cucumberを実行する
         run: |
           npx wait-on http://localhost:3000/login
           npx cucumber-js
